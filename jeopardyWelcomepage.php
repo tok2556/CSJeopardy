@@ -1,3 +1,17 @@
+<?php
+    require('jeopardyDB.php');
+    session_start();
+
+    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+        echo "Welcome to CSJeopardy, " . htmlspecialchars($_SESSION['username']) . "!";
+    } else {
+        header('Location: Login.php');
+    }
+
+
+
+?>
+
 <!DOCTYPE html>
 
 <!--style needed, implement css-->
@@ -26,7 +40,7 @@
 
             </div>  
             <div class="form-row mb-7">
-                <input type="button" onclick="window.location.href='Login.php';" 
+                <input type="button" onclick="window.location.href='logout.php';" 
                 class="btn btn-warning btn-lg" value="QUIT"/>
                
             </div>
