@@ -28,6 +28,7 @@
                 } else if(isset($_POST['username'])) {
                     $username = $_POST['username'];
                     $_SESSION['username'] = $username;
+                    $_SESSION['loggedin'] = true;
                     $url = "jeopardyWelcomepage.php";
                     header('Location: jeopardyWelcomepage.php');
                     //fix line above, implement file passage
