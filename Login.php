@@ -24,6 +24,7 @@
             } else {
                 if(isset($_SESSION['username'])) {
                     header('Location: jeopardyWelcomepage.php');
+                    $_SESSION['loggedin'] = true;
                     exit();
                 } else if(isset($_POST['username'])) {
                     $username = $_POST['username'];
