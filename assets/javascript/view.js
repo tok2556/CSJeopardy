@@ -1,21 +1,36 @@
+// All the Javascript that effects the view
+
+// On Page Load
+
+window.onload = () => {
+
+	view.welcomeScreen();
+	//view.gameOverScreen();
+
+};
+
 // View Object
 let view = {
 
 	welcomeScreen: () => {
 		$('.game-area').hide();
 		var welcomeHtml = 
-			"<h1>Are you up for the challenge?</h1>" +
-			"<input type='text' name='playerName' id='playerNameInput' maxlength=16 placeholder='PLAYER NAME'>" +
+			"<h1>Enter your Username</h1>" +
+			"<input type='text' name='playerName' id='playerNameInput' maxlength=16 placeholder='PLAYER 1 NAME'>" +
+			"<input type='text' name='playerName' id='playerNameInput' maxlength=16 placeholder='PLAYER 2 NAME'>" +
 			"<button id='button-begin-game'>BEGIN GAME</button>";
 		$('.welcome-screen').html(welcomeHtml);
 		$('#button-begin-game').click(function() {
 			playerName = $('#playerNameInput').val().trim();
 			if (playerName == "") {
 				playerName = "A PLAYER HAS NO NAME";
+				"echo <div class=echo><h9 id=malign>Your username or password was incorrect!</h9></div>";
 			}
-			$('.welcome-screen').hide();
-			$('.game-area').show();
-			game.nextQuestionInRound();
+			else	{
+				$('.welcome-screen').hide();
+				$('.game-area').show();
+				game.nextQuestionInRound();
+			}
 		});
 
 	},
@@ -30,21 +45,21 @@ let view = {
 		
 	},
 
-	//displayQuestion: () => {
-		//$('#category').text(category);
-		//$('#question').text(question);
-		//$('#question-value').text("$ "+value);
+	displayQuestion: () => {
+		$('#category').text(category);
+		$('#question').text(question);
+		$('#question-value').text("$ "+value);
 
-	//},
+	},
 
-	//displayResponses: () => {
-		//responseChoices = $('.response-choices');
-		//for (var j = 0; j < responses.length; j++) {
-			//response = $('<li>').attr('class', 'userResponse').html(responses[j]);
-			//responseChoices.append(response);
-		//}
-		//game.checkResponse();
-	//},
+	displayResponses: () => {
+		responseChoices = $('.response-choices');
+		for (var j = 0; j < responses.length; j++) {
+			response = $('<li>').attr('class', 'userResponse').html(responses[j]);
+			responseChoices.append(response);
+		}
+		game.checkResponse();
+	},
 
 	displayTimer: () => {
 		$('#timer').text(timer);
@@ -180,6 +195,7 @@ let view = {
 			counter = 0;
 		 	score = 0;
 	        playerName = "";
+			player1
 			view.updateStatBar();
 			game.clearArrays();
 			$('.welcome-screen').show();
