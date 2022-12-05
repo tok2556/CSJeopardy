@@ -35,6 +35,7 @@ CREATE TABLE answer (
 
 
 //Triggers
+
 CREATE TRIGGER `userTrigger` AFTER INSERT ON `users`
 FOR EACH ROW insert into leaderboard(username) values (new.username)
 
