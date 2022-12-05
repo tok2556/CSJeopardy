@@ -1,7 +1,8 @@
 // All the Data for the Game to function
 
 // Global Variables
-let playerName = "";
+let player1Name = "";
+let player2Name = "";
 let correct = 0;
 let inCorrect = 0;
 let counter = 0;
@@ -15,7 +16,7 @@ let responses = [];
 let usedQuestions = [];
 
 
-// Connect to database table question
+// Array of Question Objects
 let questionsArray = [
 	{
 		question: "The standard markup language for creating web pages and web applications.",
