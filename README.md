@@ -38,10 +38,3 @@ CREATE TABLE answer (
 
 CREATE TRIGGER `userTrigger` AFTER INSERT ON `users`
 FOR EACH ROW insert into leaderboard(username) values (new.username)
-
-
-//For the questions table add these alterations
-
-ALTER TABLE `question` ADD CONSTRAINT `topic` FOREIGN KEY (`topicid`) REFERENCES `topic`(`topicid`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-ALTER TABLE `question` ADD CONSTRAINT `answer` FOREIGN KEY (`answerid`) REFERENCES `answer`(`answerid`) ON DELETE CASCADE ON UPDATE CASCADE;
