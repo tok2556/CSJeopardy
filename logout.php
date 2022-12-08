@@ -14,6 +14,12 @@
     <title> CSJeopardy! logout</title>
 </head>
 
+<style>
+    html, body, table {margin: 0; padding: 0; background-color: #0000ff; color: #ffffff;}
+    body {text-align: center;}
+    a {color:#ffff33;}
+</style>
+
 <body>
     <div class = "col-lg-6 pt-5 px-5">
         <h4>You have logged out</h4>
