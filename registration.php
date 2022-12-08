@@ -67,6 +67,16 @@
     <title>CSJeopardy! Register</title>
 </head>
 
+<style>
+    html, body, table {margin: 0; padding: 0; background-color: #0000ff; color: #ffffff;}
+    body {text-align: center;}
+    input {background-color: White; border-radius: 6px; text-align: center; font-size: 20px; transition-duration: 0.1s;}
+    input:hover {background-color: #ffff33; color: black;}
+    button {background-color: White; border-radius: 6px; text-align: center; font-size: 15px; transition-duration: 0.1s;}
+    button:hover {background-color: #ffff33; color: black;}
+    a {color:#ffff33;}
+</style>
+
 <!--implement font and fix line 69 ie. implement registration form -->
 <body>
     <div class="mainbody d-flex">
