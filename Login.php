@@ -54,6 +54,18 @@
     <title>CSJeopardy! Login</title>
 </head>
 
+<style>
+    html, body, table {margin: 0; padding: 0; background-color: #0000ff; color: #ffffff;}
+    body {text-align: center;}
+    h1 {text-align: center; color:#ffff33; font-size: 75px; text-shadow: black 3px 3px; font-weight: bold; font-family:"HelveticaNeue-CondensedBold";}
+    input {background-color: White; border-radius: 6px; text-align: center; font-size: 25px; transition-duration: 0.1s;}
+    input:hover {background-color: #ffff33; color: black;}
+    button {background-color: White; border-radius: 6px; text-align: center; font-size: 16px; transition-duration: 0.1s;}
+    button:hover {background-color: #ffff33; color: black;}
+    p {font-size: 20px;}
+    a {color:#ffff33;}
+</style>
+
 <!--implement font and fix line 69 ie. implement registration form -->
 <body>
     <div class="col-ls-6 pt-5 px-5">
@@ -68,7 +80,6 @@
             </div>  
             <div class="form-row">
                 <button class="accbtn mb-2" type="submit">Submit</button>
-                <button class="regbtn">Forgot Password</button>
                 <p class="mb-0">No account? Create an account <a href="registration.php">here.</a></p> 
             </div>
         </form>
