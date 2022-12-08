@@ -28,7 +28,7 @@
     html, body, table {margin: 0; padding: 0; background-color: #0000ff; color: #ffffff;}
     h5 {text-align: left; font-family default;}
     body {text-align: center;}
-    h1 {text-align: center; color:#ffff33; font-size: 75px; text-shadow: black 3px 3px; font-weight: bold; font-family:"HelveticaNeue-CondensedBold";}
+    h1 {text-align: center; color:#ffff33; font-size: 75px; text-shadow: black 5px 5px 5px; font-weight: bold; font-family:"HelveticaNeue-CondensedBold";}
     input {background-color: White; border-radius: 6px; text-align: center; font-size: 25px; transition-duration: 0.1s;}
     input:hover {background-color: #ffff33; color: black;}
 </style>
