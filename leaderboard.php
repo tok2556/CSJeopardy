@@ -4,8 +4,8 @@
         <title>CSJeopardy LeaderBoard</title>
         <style>
             html, body, table {margin: 0; padding: 0; background-color: #0000ff; color: #ffffff;}
-		    h2 {text-align: center; color:#ffff33; font-size: 5vh; text-shadow: black 3px 3px; font-weight: bold; font-family:"HelveticaNeue-CondensedBold";}
-            td, th {text-align: center; vertical-align: middle; border: 1px #ccccff solid;}
+		    h2 {text-align: center; color:#ffff33; font-size: 5vh; text-shadow: black 5px 5px 5px; font-weight: bold; font-family:"HelveticaNeue-CondensedBold";}
+            td, th {text-align: center; background-color: #011BA9; vertical-align: middle; border: 1px #ccccff solid;}
             th {color: #ffff33; font-weight: bold; font-family: "Korinna";}
             table {width: 100vw; height: 10vh; border-spacing: 0; border-collapse: collapse;}
             input {background-color: White; border-radius: 6px; text-align: center; font-size: 13px; transition-duration: 0.1s;}
