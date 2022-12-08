@@ -2,14 +2,26 @@
 
 	<header class="top-header">
 		<h1>CSJeopardy!</h1>
-    	<p class="score">Score <span class="score-count"></span></p>
-   	</header>
+      <span class="player" data-player="p1" contenteditable="true">Player 1</span>
+      <p class="score1">Score: <span class="score1-count"></span></p>
+      <span class="player" data-player="p2" contenteditable="true">Player 2</span>
+		<p class="score2">Score: <span class="score2-count"></span></p>
+   </header>
    
    <!-- container for the board -->
-    <div class="board">
-       <!-- categories get injected here -->
-    </div>
-   
+   <div class="board">
+      <!-- categories get injected here -->
+   </div>
+<br>
+</br>
+<br>
+</br>
+   <div class="form-row mb-8">
+      <input type="button" onclick="window.location.href='game.php';" class="btn btn-warning btn-lg" value="Restart">
+   </div>
+   <div class="form-row mb-9">
+      <input type="button" onclick="window.location.href='jeopardyWelcomepage.php';" class="btn btn-warning btn-lg" value="Quit"/>
+   </div>
    	<!-- invisible container for the card prompt -->
     <div class="card-modal">
        <div class=card-modal-inner>
@@ -25,10 +37,10 @@
                 The correct answer is <span class="result_correct-answer-text"><!--answer gets injected here--></span>
              	</p>
           	</div>
-       	</div>
+         </div>
     </div>
 </div>
-    <style>
+<style>
 		:root {
    --blue: linear-gradient(180deg, #0120CB 0%, #011BA9 100%);
    --yellow: #FFE817;
@@ -37,7 +49,7 @@
    --spooky-orange: #ad4e08;
    --spooky-orange-text: #fffec8;
    --gap: 0.1em;
-   --text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+   --text-shadow: black 5px 5px 5px ;
 }
 
 * {
@@ -49,13 +61,12 @@ html, body {
 }
 
 body {
-   font-family: sans-serif;
-   // background: #222;
-   color: white;
+   font-family: "Korinna";
+   background: #0000ff;
+   color: yellow;
    font-size: 2vw;
    text-align: center;
    padding: 1em;
-   background: linear-gradient(180deg, #2E2E3A 0%, #0C0C2C 100%);
 }
 
 .top-header {
@@ -64,17 +75,28 @@ body {
    align-items: center;
    text-shadow: var(--text-shadow);
 }
-.score {
+.score1 {
    display: flex;
    align-items: center;
 }
-.score-count {
+.score1-count {
    color: var(--yellow);
    font-size: 2em;
    font-weight:bold;
+   text-shadow: Black 1px 1px 1px;
    margin-left: 0.2em;
 }
-
+.score2 {
+   display: flex;
+   align-items: center;
+}
+.score2-count {
+   color: var(--yellow);
+   font-size: 2em;
+   font-weight:bold;
+   text-shadow: Black 1px 1px 1px;
+   margin-left: 0.2em;
+}
 .column ul {
    list-style-type: none;
    margin: 0;
@@ -91,7 +113,7 @@ body {
 }
 .board .column header {
    text-transform: capitalize;
-   background: var(--blue);
+   background: #191970; 
    text-align: center;
    margin-bottom: 1em;
    height: 3em;
@@ -118,9 +140,17 @@ body {
    text-shadow: var(--text-shadow);
    font-weight:bold;
 }
+.board .column button:hover {
+background-color: #00ffff	; 
+color: black;
+text-shadow: none;
+}
 .board .column button.used {
    visibility: hidden;
 }
+
+input {background-color: White; border-radius: 6px; text-align: center; font-size: 20px;}
+input:hover {background-color: #ffff33; color: black;}
 
 .card-modal {
    opacity: 0;
@@ -200,10 +230,10 @@ body {
    display:block;
    margin-left: 0.1em;
 }
-	</style>
+</style>
         
 		<script>
-			class TriviaGameShow {
+			class Jeopardy {
    				constructor(element, options={}) {
       
       			//Which categories we should use (or use default is nothing provided)
@@ -215,11 +245,13 @@ body {
       
       //State
       this.currentClue = null;
-      this.score = 0;
+      this.score1 = 0;
+      this.score2 = 0;
       
       //Elements
       this.boardElement = element.querySelector(".board");
-      this.scoreCountElement = element.querySelector(".score-count");
+      this.score1CountElement = element.querySelector(".score1-count");
+      this.score2CountElement = element.querySelector(".score2-count");
       this.formElement = element.querySelector("form");
       this.inputElement = element.querySelector("input[name=user-answer]");
       this.modalElement = element.querySelector(".card-modal");
@@ -242,7 +274,8 @@ body {
       });
       
       //Render initial state of score
-      this.updateScore(0);
+      this.updateScore1(0);
+      this.updateScore2(0);
       
       //Kick off the category fetch
       this.fetchCategories();
@@ -318,9 +351,14 @@ body {
       this.boardElement.appendChild(column);
    }
 
-   updateScore(change) {
-      this.score += change;
-      this.scoreCountElement.textContent = this.score;
+   updateScore1(change) {
+      this.score1 += change;
+      this.score1CountElement.textContent = this.score1;
+   }
+
+   updateScore2(change) {
+      this.score2 += change;
+      this.score2CountElement.textContent = this.score2;
    }
 
    handleClueClick(event) {
@@ -353,7 +391,12 @@ body {
       
       var isCorrect = this.cleanseAnswer(this.inputElement.value) === this.cleanseAnswer(this.currentClue.answer);
       if (isCorrect) {
-         this.updateScore(this.currentClue.value);
+         this.updateScore1(this.currentClue.value);
+      }
+      
+      var isCorrect = this.cleanseAnswer(this.inputElement.value) === this.cleanseAnswer(this.currentClue.answer);
+      if (isCorrect) {
+         this.updateScore2(this.currentClue.value);
       }
       
       //Show answer
@@ -401,7 +444,7 @@ function shuffle(a) {
     return a;
 } 
 
-const game = new TriviaGameShow( document.querySelector(".app"), {});
+const game = new Jeopardy( document.querySelector(".app"), {});
 game.initGame();
 
 
