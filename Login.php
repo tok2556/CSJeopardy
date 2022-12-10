@@ -7,20 +7,24 @@
     //connect to database
     if($_SERVER["REQUEST_METHOD"] == "POST") {
         $username = $_POST['username'];
-        $password = $_POST['password'];
+        $passwordInput = $_POST['password'];
         $emptyUP = false;
         
         //prompt user to enter login info 
         //added input validation to check DB for confirmation
-        if(empty($username) || empty($password)) {
+        if(empty($username) || empty($passwordInput)) {
             echo "<div class=echo><h6>Fill out all forms completely!<h6></div>";
         } else {
-            $query = "SELECT * FROM users WHERE username='$username' AND passcode='$password' LIMIT 1";
+            $query = "SELECT * FROM users WHERE username='$username' LIMIT 1";
             $result = mysqli_query($jeopdb, $query);
             $user = mysqli_fetch_assoc($result);
+            $passwordHash = $user['passcode'];
+            $isVerified = password_verify($passwordInput, $passwordHash);
 
             if(!$user){
                 echo "<div class=echo><h9 id=malign>Your username or password was incorrect!</h9></div>";
+            } else if(!$isVerified){
+                echo "<div class=echo><h9 id=malign>Your username or password was incorrect! man</h9></div>";
             } else {
                 if(isset($_SESSION['username'])) {
                     header('Location: jeopardyWelcomepage.php');
