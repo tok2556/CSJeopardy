@@ -5,16 +5,16 @@
 
     if($_SERVER["REQUEST_METHOD"] == "POST") {
         $username = $_POST['username'];
-        $password = $_POST['password'];
+        $passwordHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $email = $_POST['email'];
 
         //Check if all fields are filled out
         //Password must be longer than 9 characters
         //check for duplicate users
         //If checklist is passed, initiate a query to insert data into the db
-        if(empty($username) || empty($password) || empty($email)) {
+        if(empty($username) || empty($passwordHash) || empty($email)) {
             echo "<div class=echo><h6 id=malign>Fill out all forms completely</h6></div>";
-        } else if(strlen($password) < 9) {
+        } else if(strlen($passwordHash) < 9) {
             echo "<div class=echo><h6 id=malign>Password must be longer than 9 characters</h6></div>";
         } else {
             $duplicateUser = "SELECT * FROM users WHERE username='$username' OR email='$email' LIMIT 1";
@@ -34,7 +34,7 @@
                 } else {
                     //user does not exist already and can be registered and transfered to the login page
                     $query = "INSERT INTO users(username, passcode, email)
-                    VALUES('$username', '$password', '$email')";
+                    VALUES('$username', '$passwordHash', '$email')";
                     mysqli_query($jeopdb, $query);
                     if(isset($_SESSION['username'])) {
                         header('Location: Login.php');
