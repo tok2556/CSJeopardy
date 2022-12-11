@@ -233,61 +233,64 @@ input:hover {background-color: #ffff33; color: black;}
 </style>
         
 		<script>
-			class Jeopardy {
-   				constructor(element, options={}) {
+	class Jeopardy {
+   	constructor(element, options={}) {
+		//property to keep track of current player
+		this.currentPlayer = "p1";
+	
       
-      			//Which categories we should use (or use default is nothing provided)
-      			this.useCategoryIds = options.useCategoryIds || [ 1892, 4483, 88, 218]; 
+      		//Which categories we should use (or use default is nothing provided)
+      		this.useCategoryIds = options.useCategoryIds || [ 1892, 4483, 88, 218]; 
     
-      //Database
-      this.categories = [];
-      this.clues = {};
+      		//Database
+      		this.categories = [];
+      		this.clues = {};
       
-      //State
-      this.currentClue = null;
-      this.score1 = 0;
-      this.score2 = 0;
+     		//State
+      		this.currentClue = null;
+      		this.score1 = 0;
+      		this.score2 = 0;
       
-      //Elements
-      this.boardElement = element.querySelector(".board");
-      this.score1CountElement = element.querySelector(".score1-count");
-      this.score2CountElement = element.querySelector(".score2-count");
-      this.formElement = element.querySelector("form");
-      this.inputElement = element.querySelector("input[name=user-answer]");
-      this.modalElement = element.querySelector(".card-modal");
-      this.clueTextElement = element.querySelector(".clue-text");
-      this.resultElement = element.querySelector(".result");
-      this.resultTextElement = element.querySelector(".result_correct-answer-text");
-      this.successTextElement = element.querySelector(".result_success");
-      this.failTextElement = element.querySelector(".result_fail");
-   }
+      		//Elements
+      		this.boardElement = element.querySelector(".board");
+      		this.score1CountElement = element.querySelector(".score1-count");
+      		this.score2CountElement = element.querySelector(".score2-count");
+      		this.formElement = element.querySelector("form");
+      		this.inputElement = element.querySelector("input[name=user-answer]");
+      		this.modalElement = element.querySelector(".card-modal");
+      		this.clueTextElement = element.querySelector(".clue-text");
+      		this.resultElement = element.querySelector(".result");
+      		this.resultTextElement = element.querySelector(".result_correct-answer-text");
+      		this.successTextElement = element.querySelector(".result_success");
+      		this.failTextElement = element.querySelector(".result_fail");
+   	}
 
-   initGame() {
-      //Bind event handlers
-      this.boardElement.addEventListener("click", event => {
-         if (event.target.dataset.clueId) {
-            this.handleClueClick(event);
-         }
-      });
-      this.formElement.addEventListener("submit", event => {
-         this.handleFormSubmit(event);
-      });
+   	initGame() {
+      		//Bind event handlers
+     		 this.boardElement.addEventListener("click", event => {
+         	if (event.target.dataset.clueId) {
+            		this.handleClueClick(event);
+         	}
+      	});
+     	 this.formElement.addEventListener("submit", event => {
+         	this.handleFormSubmit(event);
+      	});
       
-      //Render initial state of score
-      this.updateScore1(0);
-      this.updateScore2(0);
+      	//Render initial state of score
+      	this.updateScore1(0);
+      	this.updateScore2(0);
       
-      //Kick off the category fetch
-      this.fetchCategories();
-   }
+      	//Kick off the category fetch
+      	this.fetchCategories();
+   	}
    
 
-   fetchCategories() {      
-      //Fetch all of the data from the API
-      const categories = this.useCategoryIds.map(category_id => {
-         return new Promise((resolve, reject) => {
-            fetch(`https://jservice.io/api/category?id=${category_id}`)
-               .then(response => response.json()).then(data => {
+   	fetchCategories() {      
+      		//Fetch all of the data from the API
+      		const categories = this.useCategoryIds.map(category_id => {
+         		return new Promise((resolve, reject) => {
+            	fetch(`https://jservice.io/api/category?id=${category_id}`)
+               	.then(response => response.json()).then(data => {
                   resolve(data);
                });
          });
@@ -391,16 +394,18 @@ input:hover {background-color: #ffff33; color: black;}
       
       var isCorrect = this.cleanseAnswer(this.inputElement.value) === this.cleanseAnswer(this.currentClue.answer);
       if (isCorrect) {
-         this.updateScore1(this.currentClue.value);
-      }
-      
-      var isCorrect = this.cleanseAnswer(this.inputElement.value) === this.cleanseAnswer(this.currentClue.answer);
-      if (isCorrect) {
-         this.updateScore2(this.currentClue.value);
+         if(this.currentPlayer === "p1"){
+		 this.updateScore1(this.currentClue.value);
+	 } else if (this.currentPlayer === "p2") {
+		 this.updateScore2(this.currentClue.value);
+	 }
       }
       
       //Show answer
       this.revealAnswer(isCorrect);
+	   
+	//switch players
+	this.currentPlayer = this.currentPlayer === "p1" ? "p2" : "p1";
    }
    
    //Standardize an answer string so we can compare and accept variations
