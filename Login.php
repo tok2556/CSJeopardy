@@ -46,7 +46,7 @@
 ?>
 
 <!DOCTYPE html>
-
+<html>
 <!--style needed, implement css-->
 <head>
     <meta charset="utf-8">
