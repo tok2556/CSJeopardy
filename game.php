@@ -1,10 +1,10 @@
 <div class="app">
 
 	<header class="top-header">
-		<h1>CSJeopardy!</h1>
-      <span class="player" data-player="p1" contenteditable="true">Player 1</span>
+		<h1>Jeopardy!</h1>
+      <span id="p1" class="player" data-player="p1" contenteditable="true">Player 1</span>
       <p class="score1">Score: <span class="score1-count"></span></p>
-      <span class="player" data-player="p2" contenteditable="true">Player 2</span>
+      <span id="p2" class="player" data-player="p2" contenteditable="true">Player 2</span>
 		<p class="score2">Score: <span class="score2-count"></span></p>
    </header>
    
@@ -25,10 +25,11 @@
    	<!-- invisible container for the card prompt -->
     <div class="card-modal">
        <div class=card-modal-inner>
+       <p class="current-player">Current player: <span id="current-player-name"></span></p>
           <h2 class="clue-text"><!-- clue gets injected here --></h2>
           	<form autocomplete="off">
             	<input name="user-answer" type="text" />
-             	<button type="submit">Answer</button>
+             	<button type="submit" onclick="updatePlayerName()">Answer</button>
           	</form>
           	<div class="result">
              	<p class="result_success">CORRECT</p>
@@ -37,6 +38,28 @@
                 The correct answer is <span class="result_correct-answer-text"><!--answer gets injected here--></span>
              	</p>
           	</div>
+             <script>
+               
+               var player1Name = "Player 1";
+               var player2Name = "Player 2";
+
+               var currentPlayerNameElement = document.getElementById("current-player-name");
+
+               function updatePlayerName() {
+                  // Define the currentPlayer variable inside the updatePlayerName function
+                   var currentPlayer = "p1";
+                  var currentPlayernameElement = document.getElementById("current-player-name");
+
+                  if(currentPlayer === "p1") {
+                     currentPlayerNameElement.innerText = "p1";
+                  } else if(currentPlayer === "p2") {
+                     currentPlayerNameElement.innerText = "p2";
+                  }
+
+            }
+
+</script>
+            
          </div>
     </div>
 </div>
@@ -231,7 +254,6 @@ input:hover {background-color: #ffff33; color: black;}
    margin-left: 0.1em;
 }
 </style>
-        
 		<script>
 	class Jeopardy {
    	constructor(element, options={}) {
@@ -240,7 +262,7 @@ input:hover {background-color: #ffff33; color: black;}
 	
       
       		//Which categories we should use (or use default is nothing provided)
-      		this.useCategoryIds = options.useCategoryIds || [ 1892, 4483, 88, 218]; 
+      		this.useCategoryIds = this.generateRandomCategoryIds();
     
       		//Database
       		this.categories = [];
@@ -264,6 +286,22 @@ input:hover {background-color: #ffff33; color: black;}
       		this.successTextElement = element.querySelector(".result_success");
       		this.failTextElement = element.querySelector(".result_fail");
    	}
+
+      generateRandomCategoryIds() {
+         var randomCategoryIds = [];
+         var numCategories = 4;
+
+         while(randomCategoryIds.length < numCategories) {
+            var randomId = Math.floor(Math.random() * 10000);
+
+            if(!randomCategoryIds.includes(randomId)) {
+               randomCategoryIds.push(randomId);
+            }
+         }
+         return randomCategoryIds;
+      }
+
+      
 
    	initGame() {
       		//Bind event handlers
@@ -403,9 +441,16 @@ input:hover {background-color: #ffff33; color: black;}
       
       //Show answer
       this.revealAnswer(isCorrect);
+      
 	   
-	//switch players
-	this.currentPlayer = this.currentPlayer === "p1" ? "p2" : "p1";
+	   //switch players
+	   this.currentPlayer = this.currentPlayer === "p1" ? "p2" : "p1";
+
+      updatePlayerName(this.currentPlayerName);
+
+
+
+
    }
    
    //Standardize an answer string so we can compare and accept variations
