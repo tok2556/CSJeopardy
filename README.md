@@ -1,5 +1,7 @@
 # CSJeopardy
 
+This was a project I worked on with two of my classmates. It is a simple Jeopardy game that generates a random board using questions from the jservice api and can be played with two players. 
+
 //Tables 
 
 CREATE TABLE users (
